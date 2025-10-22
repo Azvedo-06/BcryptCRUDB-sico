@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trabalho - Senha Bcrypt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f3f4f6;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        max-width: 600px;
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 10px;
+      }
+
+      .subtitle {
+        font-size: 1rem;
+        color: #6b7280;
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        font-weight: 600;
+        color: #4b5563;
+        margin-bottom: 8px;
+      }
+
+      input {
+        border: 5px solid #d1d5db;
+        padding: 15px;
+        border-radius: 8px;
+        width: 50%;
+        transition: border-color 0.2s;
+      }
+
+      div.form-group {
+        margin: 15px;
+      }
+
+      button {
+        width: 100%;
+        padding: 12px;
+        background-color: #2563eb;
+        color: white;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: background-color 0.2s, opacity 0.2s;
+        cursor: pointer;
+        border: none;
+      }
+
+      button:hover:not(:disabled) {
+        background-color: #1d4ed8;
+      }
+
+      button:disabled {
+        background-color: #93c5fd;
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+
+      .message-box {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 8px;
+        font-weight: 600;
+        display: none; /* Escondido por padrão */
+      }
+
+      .message-box.success {
+        background-color: #d1fae5;
+        color: #065f46;
+        border: 1px solid #34d399;
+      }
+
+      .message-box.error {
+        background-color: #fee2e2;
+        color: #991b1b;
+        border: 1px solid #f87171;
+      }
+
+      .message-box.alert {
+        background-color: #fef3c7;
+        color: #92400e;
+        border: 1px solid #fbbd24;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Cadastro de Usuário</h1>
+      <p class="subtitle">
+        Envie nome, email e senha para o servidor em
+        <strong>http://localhost:3000/register</strong>.
+      </p>
+
+      <label for="name">Nome</label>
+      <input type="text" id="name" placeholder="Digite seu nome" required />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="Digite seu email" required />
+
+      <label for="password">Senha</label>
+      <input
+        type="password"
+        id="password"
+        placeholder="Digite sua senha"
+        required
+      />
+
+      <button id="enviarBtn">Cadastrar Usuário</button>
+
+      <div id="messageBox" class="message-box"></div>
+    </div>
+
+    <script>
+      // Variáveis de elementos
+      const enviarBtn = document.getElementById("enviarBtn");
+      const messageBox = document.getElementById("messageBox");
+
+      enviarBtn.addEventListener("click", cadastrarUsuario);
+
+      function exibirMensagem(mensagem, tipo) {
+        messageBox.textContent = mensagem;
+        messageBox.className = `message-box ${tipo}`;
+        messageBox.style.display = "block";
+      }
+
+      function limparMensagem() {
+        messageBox.textContent = "";
+        messageBox.className = "message-box";
+        messageBox.style.display = "none";
+      }
+
+      async function cadastrarUsuario() {
+        limparMensagem();
+        enviarBtn.disabled = true;
+        enviarBtn.textContent = "Enviando...";
+
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        if (!name || !password) {
+          exibirMensagem("Nome e senha são obrigatórios!", "alert");
+          enviarBtn.disabled = false;
+          enviarBtn.textContent = "Cadastrar Usuário";
+          return;
+        }
+
+        try {
+          const response = await fetch("http://localhost:3000/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, email, password }),
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            exibirMensagem(
+              `${data.message} | ID: ${data.userId}`,
+              "success"
+            );
+          } else {
+            exibirMensagem(`${data.error || "Erro ao cadastrar"}`, "error");
+          }
+        } catch (error) {
+          console.error("Erro de conexão:", error);
+          exibirMensagem("Erro ao conectar com o servidor.", "error");
+        } finally {
+          enviarBtn.disabled = false;
+          enviarBtn.textContent = "Cadastrar Usuário";
+        }
+      }
+    </script>
+  </body>
+</html>
