@@ -1,223 +1,387 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Trabalho - Upload Múltiplo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            max-width: 600px;
-            width: 100%;
-        }
-        
-        h1 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin-bottom: 10px;
-        }
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
 
-        .subtitle {
-            font-size: 1rem;
-            color: #6b7280;
-            margin-bottom: 20px;
-        }
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f3f4f6;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+      .container {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        max-width: 600px;
+        width: 100%;
+      }
 
-        label {
-            display: block;
-            font-weight: 600;
-            color: #4b5563;
-            margin-bottom: 8px;
-        }
+      h1 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 10px;
+      }
 
-        input[type="file"] {
-            border: 2px solid #d1d5db;
-            padding: 10px;
-            border-radius: 8px;
-            width: 100%;
-            transition: border-color 0.2s;
-        }
+      .subtitle {
+        font-size: 1rem;
+        color: #6b7280;
+        margin-bottom: 20px;
+      }
 
-        input[type="file"]:focus {
-            outline: none;
-            border-color: #2563eb;
-        }
+      .form-group {
+        box-shadow: inset 2px grey;
+        margin-bottom: 20px;
+        margin: 10px;
+      }
 
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #2563eb;
-            color: white;
-            font-weight: 600;
-            border-radius: 8px;
-            transition: background-color 0.2s, opacity 0.2s;
-            cursor: pointer;
-            border: none;
-        }
+      label {
+        display: block;
+        font-weight: 600;
+        color: #4b5563;
+        margin-bottom: 8px;
+      }
 
-        button:hover:not(:disabled) {
-            background-color: #1d4ed8;
-        }
+      input[type="file"] {
+        border: 2px solid #d1d5db;
+        padding: 10px;
+        border-radius: 8px;
+        width: 100%;
+        transition: border-color 0.2s;
+      }
 
-        button:disabled {
-            background-color: #93c5fd;
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-        
-        .message-box {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            font-weight: 600;
-            display: none; /* Escondido por padrão */
-        }
+      input[type="file"]:focus {
+        outline: none;
+        border-color: #2563eb;
+      }
 
-        .message-box.success {
-            background-color: #d1fae5;
-            color: #065f46;
-            border: 1px solid #34d399;
-        }
+      button {
+        width: 100%;
+        padding: 12px;
+        background-color: #2563eb;
+        color: white;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: background-color 0.2s, opacity 0.2s;
+        cursor: pointer;
+        border: none;
+      }
 
-        .message-box.error {
-            background-color: #fee2e2;
-            color: #991b1b;
-            border: 1px solid #f87171;
-        }
-        
-        .message-box.alert {
-            background-color: #fef3c7;
-            color: #92400e;
-            border: 1px solid #fbbd24;
-        }
+      button:hover:not(:disabled) {
+        background-color: #1d4ed8;
+      }
+
+      button:disabled {
+        background-color: #93c5fd;
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+
+      .message-box {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 8px;
+        font-weight: 600;
+        display: none; /* Escondido por padrão */
+      }
+
+      .message-box.success {
+        background-color: #d1fae5;
+        color: #065f46;
+        border: 1px solid #34d399;
+      }
+
+      .message-box.error {
+        background-color: #fee2e2;
+        color: #991b1b;
+        border: 1px solid #f87171;
+      }
+
+      .message-box.alert {
+        background-color: #fef3c7;
+        color: #92400e;
+        border: 1px solid #fbbd24;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <h1>Atividade: Upload Múltiplo</h1>
-        <p class="subtitle">Implemente a lógica de envio de múltiplos arquivos para o servidor em `http://localhost:3000/upload`.</p>
-        
+      <section class="auth-container">
+        <h2>Registrar Novo Usuário</h2>
+        <form id="formRegistro" class="form-group">
+          <label for="regUsername">Usuário:</label>
+          <input type="text" id="regUsername" required />
+
+          <label for="regEmail">Email:</label>
+          <input type="email" id="regEmail" required />
+
+          <label for="regPassword">Senha:</label>
+          <input type="password" id="regPassword" required />
+
+          <button type="submit">Registrar</button>
+          <div id="messageBoxRegistro" class="message-box"></div>
+        </form>
+
+        <h2>Login</h2>
+        <form id="formLogin" class="form-group">
+          <label for="LoginUsername">Usuário:</label>
+          <input type="text" id="LoginUsername" required />
+
+          <label for="LoginEmail">Email:</label>
+          <input type="email" id="LoginEmail" required />
+
+          <label for="LoginPassword">Senha:</label>
+          <input type="password" id="LoginPassword" required />
+
+          <button type="submit">Entrar</button>
+        </form>
+      </section>
+      <h3 class="Bem-vindo">Bem-vindo</h3>
+      <button id="botaoSair">Sair</button>
+      <section class="upload-container">
+        <h2>Atividade: Upload Múltiplo</h2>
+        <p class="subtitle">
+          Implemente a lógica de envio de múltiplos arquivos para o servidor em
+          `http://localhost:3000/upload`.
+        </p>
+
         <div class="form-group">
-            <label for="arquivoInput">Arquivos para Upload:</label>
-            <!-- 🚨 OBRIGATÓRIO: Habilitar a seleção múltipla e definir o campo 'meusArquivos' -->
-            <input 
-                type="file" 
-                id="arquivoInput" 
-                name="meusArquivos" 
-                multiple 
-                accept="image/png, image/jpeg" 
-            >
+          <label for="arquivoInput">Arquivos para Upload:</label>
+          <!-- 🚨 OBRIGATÓRIO: Habilitar a seleção múltipla e definir o campo 'meusArquivos' -->
+          <input
+            type="file"
+            id="arquivoInput"
+            name="meusArquivos"
+            multiple
+            accept="image/png, image/jpeg"
+          />
         </div>
 
         <button id="enviarBtn">Enviar Arquivos</button>
-        
-        <div id="messageBox" class="message-box"></div>
+
+        <div id="messageBoxUpload" class="message-box"></div>
+      </section>
     </div>
 
     <script>
-        // Variáveis de elementos
-        const enviarBtn = document.getElementById('enviarBtn');
-        const messageBox = document.getElementById('messageBox');
-        const arquivoInput = document.getElementById('arquivoInput');
-        
-        // Adiciona o listener ao botão
-        enviarBtn.addEventListener('click', enviarArquivos);
+      document.addEventListener("DOMContentLoaded", () => {
+        const formRegistro = document.getElementById("formRegistro");
+        const formLogin = document.getElementById("formLogin");
+        const botaoSair = document.getElementById("botaoSair");
 
-        // --- FUNÇÕES DE UTILIDADE (Já prontas) ---
+        formRegistro.addEventListener("submit", handleRegister);
+        formLogin.addEventListener("submit", handleLogin);
+        botaoSair.addEventListener("click", handleLogout);
 
-        function exibirMensagem(mensagem, tipo) {
-            messageBox.textContent = mensagem;
-            messageBox.className = `message-box ${tipo}`;
-            messageBox.style.display = 'block';
+        atualizarUI();
+      });
+
+      async function handleRegister(event) {
+        event.preventDefault();
+
+        const name = document.getElementById("regUsername").value;
+        const email = document.getElementById("regEmail").value;
+        const password = document.getElementById("regPassword").value;
+
+        const response = await fetch("http://localhost:3000/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, email, password }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // 201
+          exibirMensagem(
+            `Usuário ${data.name} registrado`,
+            "sucesso",
+            "messageBoxRegistro"
+          );
+        } else {
+          // 400
+          exibirMensagem(
+            `Erro: ${data.mensagem}`,
+            "erro",
+            "messageBoxRegistro"
+          );
         }
+      }
 
-        function limparMensagem() {
-            messageBox.textContent = '';
-            messageBox.className = 'message-box';
-            messageBox.style.display = 'none';
+      async function handleLogin(event) {
+        event.preventDefault();
+
+        const name = document.getElementById("LoginUsername").value;
+        const password = document.getElementById("LoginPassword").value;
+
+        const response = await fetch("http://localhost:3000/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, password }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          exibirMensagem(`Login realizado`, "sucesso");
+          localStorage.setItem("authToken", data.token);
+          atualizarUI();
+        } else {
+          // 400
+          exibirMensagem(`Erro: ${data.mensagem}`, "erro");
         }
+      }
 
-        // --- FUNÇÃO PRINCIPAL (A SER IMPLEMENTADA) ---
+      function handleLogout() {
+        localStorage.removeItem("authToken");
+        exibirMensagem("Você foi desconectado.", "sucesso");
+        atualizarUI();
+      }
 
-        async function enviarArquivos() {
-            limparMensagem();
-            enviarBtn.disabled = true;
-            enviarBtn.textContent = 'Enviando...';
-            
-            try {
-                // 1. COLETAR ARQUIVOS
-                const formData = new FormData();
-                const arquivos = arquivoInput.files;
+      // Variáveis de elementos
+      const enviarBtn = document.getElementById("enviarBtn");
+      const messageBox = document.getElementById("messageBox");
+      const arquivoInput = document.getElementById("arquivoInput");
 
-                if (arquivos.length === 0) {
-                    exibirMensagem('Nenhum arquivo selecionado.', 'alert');
-                    return;
-                }
+      // Adiciona o listener ao botão
+      enviarBtn.addEventListener("click", enviarArquivos);
 
-                // ----------------------------------------------------
-                //  IMPLEMENTAÇÃO NECESSÁRIA PELO ALUNO:
-                //
-                // 2. CRIAR O OBJETO FormData
-                // 3. FAZER O LOOP (for...of)
-                // 4. USAR formData.append('meusArquivos', arquivoAtual)
-                // 5. EXECUTAR O FETCH
-                // 6. TRATAR response.ok e response.json()
-                // ----------------------------------------------------
+      // --- FUNÇÕES DE UTILIDADE (Já prontas) ---
 
-                // Código do aluno deve vir aqui.
-                const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InRlc3QiLCJpYXQiOjE3NjE3NDgwOTksImV4cCI6MTc2MTc1MTY5OX0.WIn4ydRSTXNpWxqzA_8YslO5HuIA0mC0z2RLcCnlJa0"
-                for (let i = 0; i < arquivos.length; i++) {
-                    const arquivoAtual = arquivos[i];
+      function exibirMensagem(
+        mensagem,
+        tipo = "alert",
+        id = "messageBoxUpload"
+      ) {
+        const box = document.getElementById(id);
+        if (!box) return;
+        box.textContent = mensagem;
+        box.className = `message-box ${tipo}`;
+        box.style.display = "block";
+      }
 
-                    formData.append('meusArquivos', arquivoAtual);
-                }
+      function limparMensagem(id = "messageBoxUpload") {
+        const box = document.getElementById(id);
+        if (!box) return;
+        box.textContent = "";
+        box.className = "message-box";
+        box.style.display = "none";
+      }
 
-                const response = await fetch('http://localhost:3000/upload', {
-                    method: 'POST',
-                    headers: {
-                        "Authorization": `Bearer ${token}`
-                    },
-                    body: formData
-                });
+      // --- FUNÇÃO PRINCIPAL (A SER IMPLEMENTADA) ---
 
-                if (response.ok) {
-                    const result = await response.json();
-                    exibirMensagem(`Upload de: ${result.fileCount} feitos com sucesso!`, 'success');
-                } else {
-                    const errorData = await response.json();
-                    exibirMensagem(`Erro: ${errorData.message || 'Erro Desconhecido'}`, 'error');
-                }
-                // --- FIM DO CÓDIGO DO ALUNO ---
+      async function enviarArquivos() {
+        limparMensagem();
+        enviarBtn.disabled = true;
+        enviarBtn.textContent = "Enviando...";
 
-            } catch (error) {
-                console.error('Erro de requisição:', error);
-                exibirMensagem(`Erro de conexão com o servidor. Verifique o console.`, 'error');
-            } finally {
-                enviarBtn.disabled = false;
-                enviarBtn.textContent = 'Enviar Arquivos';
-            }
+        try {
+          // 1. COLETAR ARQUIVOS
+          const formData = new FormData();
+          const arquivos = arquivoInput.files;
+
+          if (arquivos.length === 0) {
+            exibirMensagem("Nenhum arquivo selecionado.", "alert");
+            return;
+          }
+
+          // ----------------------------------------------------
+          //  IMPLEMENTAÇÃO NECESSÁRIA PELO ALUNO:
+          //
+          // 2. CRIAR O OBJETO FormData
+          // 3. FAZER O LOOP (for...of)
+          // 4. USAR formData.append('meusArquivos', arquivoAtual)
+          // 5. EXECUTAR O FETCH
+          // 6. TRATAR response.ok e response.json()
+          // ----------------------------------------------------
+
+          // Código do aluno deve vir aqui.
+          const token = localStorage.getItem("authToken");
+          if (!token) {
+            exibirMensagem(
+              "Erro: Você precisa estar logado para enviar arquivos",
+              "erro"
+            );
+            return;
+          }
+
+          for (let i = 0; i < arquivos.length; i++) {
+            const arquivoAtual = arquivos[i];
+
+            formData.append("meusArquivos", arquivoAtual);
+          }
+
+          const response = await fetch("http://localhost:3000/upload", {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: formData,
+          });
+
+          if (response.ok) {
+            const result = await response.json();
+            exibirMensagem(
+              `Upload de: ${result.fileCount} feitos com sucesso!`,
+              "success",
+              "messageBoxUpload"
+            );
+          } else {
+            const errorData = await response.json();
+            exibirMensagem(
+              `Erro: ${errorData.message || "Erro Desconhecido"}`,
+              "error",
+              "messageBoxUpload"
+            );
+          }
+          // --- FIM DO CÓDIGO DO ALUNO ---
+        } catch (error) {
+          console.error("Erro de requisição:", error);
+          exibirMensagem(
+            `Erro de conexão com o servidor. Verifique o console.`,
+            "error"
+          );
+        } finally {
+          enviarBtn.disabled = false;
+          enviarBtn.textContent = "Enviar Arquivos";
         }
+      }
+
+      function atualizarUI() {
+        const token = localStorage.getItem("authToken");
+        const secaoAuth = document.querySelector(".auth-container");
+        const secaoUpload = document.querySelector(".upload-container");
+        const botaoSair = document.getElementById("botaoSair");
+        const mensagemBemVindo = document.querySelector(".Bem-vindo");
+
+        if (token) {
+          secaoAuth.style.display = "none";
+          secaoUpload.style.display = "block";
+          botaoSair.style.display = "block";
+          mensagemBemVindo.style.display = "block";
+        } else {
+          secaoAuth.style.display = "block";
+          secaoUpload.style.display = "block";
+          botaoSair.style.display = "none";
+          mensagemBemVindo.style.display = "none";
+        }
+      }
     </script>
-</body>
+  </body>
 </html>
